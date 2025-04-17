@@ -10,6 +10,7 @@ import {
 
 import { Meme } from "@/app/types";
 import { createMeme } from "@/app/utils/memeUtils";
+import defaultMemes from "@/app/data/memes.json";
 
 type MemeContextType = {
   memes: Meme[];
@@ -27,7 +28,14 @@ export function MemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem("memes");
 
-    if (saved) setMemes(JSON.parse(saved));
+    if (saved) {
+      setMemes(JSON.parse(saved));
+    } else {
+      const initialMemes = defaultMemes.map((data) =>
+        createMeme(data)
+      );
+      setMemes(initialMemes);
+    }
     setIsInitialized(true);
   }, []);
 

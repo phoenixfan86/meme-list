@@ -10,7 +10,6 @@ import {
 
 import { Meme } from "@/app/types";
 import { createMeme } from "@/app/utils/memeUtils";
-import defaultMemes from "@/app/data/memes.json";
 
 type MemeContextType = {
   memes: Meme[];
@@ -30,14 +29,22 @@ export function MemeProvider({ children }: { children: ReactNode }) {
 
     if (saved) {
       setMemes(JSON.parse(saved));
+      setIsInitialized(true);
     } else {
-      const initialMemes = defaultMemes.map((data) =>
-        createMeme(data)
-      );
-      setMemes(initialMemes);
+      fetch("/data/memes.json")
+        .then((res) => res.json())
+        .then((json) => {
+          const initialMemes = json.map((data: any) => createMeme(data));
+          setMemes(initialMemes);
+          setIsInitialized(true);
+        })
+        .catch((err) => {
+          console.error("Error loading memes.json:", err);
+          setIsInitialized(true);
+        });
     }
-    setIsInitialized(true);
   }, []);
+
 
   useEffect(() => {
     if (isInitialized) {

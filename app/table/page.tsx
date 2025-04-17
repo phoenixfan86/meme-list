@@ -1,7 +1,9 @@
-import MemeTable from "@/components/MemeTable"
+import MemeTable from "@/components/MemeTable";
 
 export default function PageMemeTable() {
   return (
-    <div className=""><MemeTable /></div>
-  )
+    <div className="">
+      <MemeTable />
+    </div>
+  );
 }

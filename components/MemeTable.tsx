@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Table,
@@ -21,9 +21,10 @@ import {
   DropdownMenu,
 } from "@heroui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+
 import { useMemeContext } from "@/app/context/MemeContext";
 import { Meme } from "@/app/types";
-import { useState } from "react";
 
 export default function MemeTable() {
   const { isOpen, onOpenChange } = useDisclosure();
@@ -33,21 +34,24 @@ export default function MemeTable() {
   const hendleEdit = (meme: Meme) => {
     setSelectedMeme(meme);
     onOpenChange();
-  }
+  };
 
   const handleSave = () => {
     if (selectedMeme) updateMeme(selectedMeme);
     onOpenChange();
   };
 
-  if (!isInitialized) return <p>Завантаження...</p>
+  if (!isInitialized) return <p>Завантаження...</p>;
+
   return (
     <>
-      <Table aria-label="Meme collection table" isStriped >
+      <Table isStriped aria-label="Meme collection table">
         <TableHeader>
           <TableColumn className="px-2 sm:px-3 text-center">ID</TableColumn>
           <TableColumn className="px-2 sm:px-3 text-center">Назва</TableColumn>
-          <TableColumn className="px-2 sm:px-3 text-center">Зображення</TableColumn>
+          <TableColumn className="px-2 sm:px-3 text-center">
+            Зображення
+          </TableColumn>
           <TableColumn className="px-2 sm:px-3 text-center">Лайки</TableColumn>
           <TableColumn className="px-2 sm:px-3 text-center">Дія</TableColumn>
         </TableHeader>
@@ -61,13 +65,27 @@ export default function MemeTable() {
                 {meme.title}
               </TableCell>
               <TableCell className="text-xs sm:text-base px-2 sm:px-3 text-center">
-                <a href={meme.imageUrl} target="_blank" className="text-blue-500">Link</a>
+                <a
+                  className="text-blue-500"
+                  href={meme.imageUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Link
+                </a>
               </TableCell>
               <TableCell className="text-xs sm:text-base px-2 sm:px-3 text-center">
                 {meme.likes} ❤️
               </TableCell>
               <TableCell className="text-xs sm:text-base px-2 sm:px-3 text-center">
-                <Button onPress={() => hendleEdit(meme)} color="default" variant="faded" className="">Edit</Button>
+                <Button
+                  className=""
+                  color="default"
+                  variant="faded"
+                  onPress={() => hendleEdit(meme)}
+                >
+                  Edit
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -87,26 +105,37 @@ export default function MemeTable() {
                       label="Назва"
                       value={selectedMeme.title}
                       onChange={(e) =>
-                        setSelectedMeme({ ...selectedMeme, title: e.target.value })
+                        setSelectedMeme({
+                          ...selectedMeme,
+                          title: e.target.value,
+                        })
                       }
                     />
                     <Input
                       label="Зображення (URL)"
                       value={selectedMeme.imageUrl}
                       onChange={(e) =>
-                        setSelectedMeme({ ...selectedMeme, imageUrl: e.target.value })
+                        setSelectedMeme({
+                          ...selectedMeme,
+                          imageUrl: e.target.value,
+                        })
                       }
                     />
                     <Dropdown>
                       <DropdownTrigger>
-                        <Button endContent={<ChevronDownIcon className="w-4 h-4" />}>
+                        <Button
+                          endContent={<ChevronDownIcon className="w-4 h-4" />}
+                        >
                           {selectedMeme.likes} ❤️
                         </Button>
                       </DropdownTrigger>
                       <DropdownMenu
                         aria-label="Вибрати кількість лайків"
                         onAction={(key) =>
-                          setSelectedMeme({ ...selectedMeme, likes: Number(key) })
+                          setSelectedMeme({
+                            ...selectedMeme,
+                            likes: Number(key),
+                          })
                         }
                       >
                         {[0, 25, 50, 75, 100].map((count) => (

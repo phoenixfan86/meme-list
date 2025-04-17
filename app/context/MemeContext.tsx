@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+
 import { Meme } from "@/app/types";
 import { createMeme } from "@/app/utils/memeUtils";
 
@@ -19,8 +26,9 @@ export function MemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("memes");
+
     if (saved) setMemes(JSON.parse(saved));
-    setIsInitialized(true)
+    setIsInitialized(true);
   }, []);
 
   useEffect(() => {
@@ -31,14 +39,15 @@ export function MemeProvider({ children }: { children: ReactNode }) {
 
   const addMeme = (data: Omit<Meme, "id" | "likes">) => {
     const newMeme = createMeme(data);
+
     setMemes((prev) => [...prev, newMeme]);
   };
 
   const updateMeme = (updatedMeme: Meme) => {
     setMemes((prev: Meme[]) =>
       prev.map((meme: Meme) =>
-        meme.id === updatedMeme.id ? updatedMeme : meme
-      )
+        meme.id === updatedMeme.id ? updatedMeme : meme,
+      ),
     );
   };
 
@@ -51,6 +60,9 @@ export function MemeProvider({ children }: { children: ReactNode }) {
 
 export function useMemeContext() {
   const context = useContext(MemeContext);
-  if (!context) throw new Error("useMemeContext must be used within MemeProvider");
+
+  if (!context)
+    throw new Error("useMemeContext must be used within MemeProvider");
+
   return context;
 }

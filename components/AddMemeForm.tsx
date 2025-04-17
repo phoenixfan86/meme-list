@@ -7,26 +7,27 @@ interface AddMemeFormProps {
   setImageUrl: (value: string) => void;
 }
 
-export default function AddMemeForm({ title,
+export default function AddMemeForm({
+  title,
   imageUrl,
   setTitle,
-  setImageUrl, }: AddMemeFormProps) {
-
+  setImageUrl,
+}: AddMemeFormProps) {
   return (
     <div className="space-y-4 mb-6">
       <input
-        type="text"
+        className="w-full border p-2 rounded"
         placeholder="Заголовок"
+        type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full border p-2 rounded"
       />
       <input
-        type="url"
+        className="w-full border p-2 rounded"
         placeholder="URL (jpg)"
+        type="url"
         value={imageUrl}
         onChange={(e) => setImageUrl(e.target.value)}
-        className="w-full border p-2 rounded"
       />
     </div>
   );

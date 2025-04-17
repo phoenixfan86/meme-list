@@ -18,6 +18,6 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/phoenixfan86"
+    github: "https://github.com/phoenixfan86",
   },
 };

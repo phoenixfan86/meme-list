@@ -10,7 +10,9 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { useState } from "react";
+
 import AddMemeForm from "./AddMemeForm";
+
 import { useMemeContext } from "@/app/context/MemeContext";
 
 export default function AddModal() {
@@ -18,7 +20,12 @@ export default function AddModal() {
 
   return (
     <>
-      <Button onPress={onOpen} color="default" variant="faded" className="px-2 sm:px-3 text-xs sm:text-base">
+      <Button
+        className="px-2 sm:px-3 text-xs sm:text-base"
+        color="default"
+        variant="faded"
+        onPress={onOpen}
+      >
         Додати Мем
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -39,10 +46,12 @@ function AddModalInner({ onClose }: { onClose: () => void }) {
   const handleSubmit = () => {
     if (title.length < 3 || title.length > 100) {
       alert("Title must be 3–100 chars");
+
       return;
     }
     if (!/^https?:\/\/.*\.jpe?g$/i.test(imageUrl)) {
       alert("Image must be a valid JPG URL");
+
       return;
     }
 
@@ -54,14 +63,16 @@ function AddModalInner({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      <ModalHeader className="flex flex-col gap-1">Додати новий мем</ModalHeader>
+      <ModalHeader className="flex flex-col gap-1">
+        Додати новий мем
+      </ModalHeader>
       <ModalBody>
         <p>Додайте заголовок і посилання на картинку</p>
         <AddMemeForm
-          title={title}
           imageUrl={imageUrl}
-          setTitle={setTitle}
           setImageUrl={setImageUrl}
+          setTitle={setTitle}
+          title={title}
         />
       </ModalBody>
       <ModalFooter>
